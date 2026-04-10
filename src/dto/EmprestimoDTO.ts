@@ -1,3 +1,4 @@
+,
 export default interface EmprestimoDTO {
     id_emprestimo: number,
     aluno: {
