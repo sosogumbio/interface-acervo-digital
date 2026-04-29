@@ -4,7 +4,7 @@ export default interface LivroDTO {
     autor: string,
     editora: string,
     ano_publicacao: string,
-    isbn: string,
+    isbn:string,
     quant_total: number,
     quant_disponivel: number,
     quant_aquisicao: number,
