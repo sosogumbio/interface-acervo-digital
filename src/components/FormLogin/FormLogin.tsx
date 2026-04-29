@@ -1,7 +1,9 @@
-import { type JSX, useState } from 'react';
+// Importa o tipo JSX do React para definir o tipo de retorno do componente
+import { type JSX, useState } from 'react';// Importa os estilos CSS específicos para o formulário de login
 import estilo from './FormLogin.module.css';
-import AuthRequests from '../../fetch/AuthRequests';
+import AuthRequests from '../../../fetch/AuthRequests';
 
+// Declara o componente funcional LoginForm que retorna um elemento JSX
 function LoginForm(): JSX.Element {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
@@ -15,57 +17,67 @@ function LoginForm(): JSX.Element {
         preventDefault: () => void;
     }
 
-    const handleSubmit = async (e: FormEvent): Promise<void> => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        const login: LoginData = { email: email, senha: senha };
+        const login: LoginData = { email: email, senha: senha }
 
+        // lógica para autenticação do usuário
         try {
             if (await AuthRequests.login(login)) {
-                window.location.href = '/lista/aluno';
+                window.location.href = '/'; // redireciona para a página inicial
             }
         } catch (error) {
+            // lança um erro
             console.error(`Erro ao tentar fazer login: ${error}`);
-            alert('Erro ao fazer login, verifique seu email e/ou senha.');
+            alert('Erro ao fazer login, verifique se usuário e/ou senha estão corretos.');
         }
     };
 
     return (
+        // Seção principal que contém o formulário de login, com classe de estilo personalizada
         <section className={estilo['login-form-container']}>
-            <form action="POST" className={estilo['login-form']} onSubmit={handleSubmit}>
-                <h2>LOGIN</h2>
 
+            {/* Início do formulário com classe de estilo personalizada */}
+            <form action="POST" className={estilo['login-form']} onSubmit={handleSubmit}>
+
+                {/* Título do formulário */}
+                <h2 className={estilo['login-header']}>LOGIN</h2>
+
+                {/* Campo de e-mail com rótulo */}
                 <div className={estilo['form-group']}>
                     <label>
-                        Email
+                        E-mail
                         <input
-                            type="email"
-                            placeholder='Informe o seu email'
-                            className={estilo['input-email-login']}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
+                            type="email" // Define o tipo do input como e-mail
+                            placeholder='Informe o seu email' // Texto de dica para o usuário
+                            className={estilo['input-email-login']} // Classe CSS personalizada
+                            value={email}  // valor digitado no campo
+                            onChange={(e) => setEmail(e.target.value)}  // atualiza o valor conforme usuário digita
+                            required  // campo obrigatório
                         />
                     </label>
                 </div>
 
+                {/* Campo de senha com rótulo */}
                 <div className={estilo['form-group']}>
                     <label>
                         Senha
                         <input
-                            type="password"
-                            placeholder='Informe sua senha'
-                            className={estilo['input-password-login']}
-                            value={senha}
-                            onChange={(e) => setSenha(e.target.value)}
-                            required
+                            type="password" // Define o tipo do input como senha
+                            placeholder='Informe sua senha' // Texto de dica para o usuário
+                            className={estilo['input-password-login']} // Classe CSS personalizada
+                            value={senha}  // valor digitado no campo
+                            onChange={(e) => setSenha(e.target.value)}  // atualiza o valor conforme usuário digita
+                            required  // campo obrigatório
                         />
                     </label>
                 </div>
 
+                {/* Botão de login */}
                 <input
-                    type="submit"
-                    value="Entrar"
-                    className={estilo['login-button']}
+                    type="submit" // Tipo botão (não envia o formulário por padrão)
+                    value="Entrar" // Texto exibido no botão
+                    className={estilo['login-button']} // Classe CSS personalizada
                 />
             </form>
         </section>
