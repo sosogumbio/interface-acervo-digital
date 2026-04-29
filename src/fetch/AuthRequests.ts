@@ -1,86 +1,123 @@
-// Classe responsável por fazer requisições à API - autenticação
-
+/**
+ * Classe para lidar com autenticação
+ */
 class AuthRequests {
 
     private serverUrl: string;
     private endpointLogin: string;
-
+    
+    /**
+     * Construtor das rotas e do endereço do servidor
+     */
     constructor() {
+        // endereço do servidor
         this.serverUrl = 'http://localhost:3333';
+        // rota do servidor
         this.endpointLogin = '/api/login';
     }
 
-    async login(login: { email: string, senha: string }) {
+    /**
+     * Realiza a autenticação no servidor
+     * @param {*} login - email e senha
+     * @returns **true** caso sucesso, **false** caso erro
+     */
+    async login(login: { email: string, senha: string}) {       
         try {
-
-            // valida dominio do email
-            if (!login.email.includes('@adigital.com.br')) {
-                alert('Use um email com domínio @adigital.com.br');
-                return false;
-            }
-
-            const response = await fetch(this.serverUrl + this.endpointLogin, {
+            // faz a requisição POST ao servidor...
+            const response = await fetch(`${this.serverUrl}${this.endpointLogin}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                // passando as informações de login no corpo da requisição
                 body: JSON.stringify(login)
             });
-
+            
+            // Verifica alguma falha na comunicação
             if (!response.ok) {
-                return false;
+                console.log('Erro na autenticação');
+                throw new Error('Falha no login');
             }
-
+            // caso a requisição seja bem sucedida, armazena a resposta em uma constante
             const data = await response.json();
+            console.log( data );
 
+            // verifica se o atributo auth da resposta tem o valor TRUE, se tiver é porque a autenticação teve sucesso
             if (data.auth) {
-                this.persistToken(
-                    data.token,
-                    data.usuario.nome,
-                    data.usuario.id_usuario,
-                    data.auth
-                );
-                return true;
+                // persistem o token, o nome e o id do professor no localstorage
+                this.persistToken(data.token, data.usuario, data.auth);
             }
 
-            return false;
-
+            // retorna a resposta da requisição a quem chamou a função
+            return true;
         } catch (error) {
-            console.log(error);
-            return false;
+            // lança um erro em caso de falha
+            console.error('Erro: ', error);
+            throw error;
         }
     }
 
-    persistToken(token: string, username: string, idUsuario: number, isAuth: boolean) {
+    /**
+     * Persiste o token no localStorage
+     * @param {*} token - token recebido do servidor
+     * @param {*} usuario - objeto com informações do usuário vindos do servidor
+     * @param {*} isAuth - estado da autenticação do usuário
+     */
+    persistToken(token: string, usuario: {id_usuario: number, nome: string, email: string, role: string}, isAuth: boolean) {
         localStorage.setItem('token', token);
-        localStorage.setItem('username', username);
-        localStorage.setItem('idUsuario', idUsuario.toString());
+        localStorage.setItem('nome', usuario.nome);
+        localStorage.setItem('idUsuario', usuario.id_usuario.toString());
+        localStorage.setItem('email', usuario.email);
+        localStorage.setItem('role', usuario.role);
         localStorage.setItem('isAuth', isAuth.toString());
     }
 
+    /**
+     * Remove as informações do localStorage
+     */
     removeToken() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('idUsuario');
-        localStorage.removeItem('isAuth');
+        const keys = [
+            'token',
+            'nome',
+            'idUsuario',
+            'email',
+            'role',
+            'isAuth'
+        ];
 
-        window.location.href = '/login';
+        keys.map(key => localStorage.removeItem(key));
+        window.location.href = `/login`;
     }
 
+    /**
+     * Verifica a validade do token
+     * @returns **true** caso token válido, **false** caso token inválido
+     */
     checkTokenExpiry() {
+        // recupera o valor do token no localstorage
         const token = localStorage.getItem('token');
+        
+        // verifica se o valor é diferente de vazio
+        if (token) {
+            // recupera a data de expiração do token
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            // recuepra a hora de expiração do token
+            const expiry = payload.exp;
+            // pega a data e hora atual
+            const now = Math.floor(Date.now() / 1000);
 
-        if (!token) return false;
-
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        const now = Math.floor(Date.now() / 1000);
-
-        if (payload.exp < now) {
-            this.removeToken();
-            return false;
+            // verifica se o token está expirado
+            if (expiry < now) {
+                // invoca a função para remover o token do localstorage
+                this.removeToken();
+                // retorna false
+                return false;
+            }
+            // caso o token não esteja expirado, retorna true
+            return true;
         }
-
-        return true;
+        // caso o token esteja vazio, retorna false
+        return false;
     }
 }
 
