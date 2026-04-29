@@ -21,7 +21,7 @@ function LoginForm(): JSX.Element {
 
         try {
             if (await AuthRequests.login(login)) {
-                window.location.href = '/';
+                window.location.href = '/lista/aluno';
             }
         } catch (error) {
             console.error(`Erro ao tentar fazer login: ${error}`);

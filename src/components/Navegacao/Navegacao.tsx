@@ -24,24 +24,26 @@ function Navegacao(): JSX.Element {
             className: 'm-5 text-white text-lg',
             url: "/"
         },
-        {
-            label: 'Alunos',
-            icon: 'pi pi-users',
-            className: 'm-5 text-white text-lg',
-            url: "/lista/aluno"
-        },
-        {
-            label: 'Livros',
-            icon: 'pi pi-book',
-            className: 'm-5 text-white text-lg',
-            url: "/lista/livro"
-        },
-        {
-            label: 'Empréstimos',
-            icon: 'pi pi-exchange',
-            className: 'm-5 text-white text-lg',
-            url: "/lista/emprestimo"
-        }
+        ...(isAuthenticated ? [
+            {
+                label: 'Alunos',
+                icon: 'pi pi-users',
+                className: 'm-5 text-white text-lg',
+                url: "/lista/aluno"
+            },
+            {
+                label: 'Livros',
+                icon: 'pi pi-book',
+                className: 'm-5 text-white text-lg',
+                url: "/lista/livro"
+            },
+            {
+                label: 'Empréstimos',
+                icon: 'pi pi-exchange',
+                className: 'm-5 text-white text-lg',
+                url: "/lista/emprestimo"
+            }
+        ] : [])
     ];
 
     const start = (

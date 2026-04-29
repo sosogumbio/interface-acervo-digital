@@ -5,6 +5,7 @@ import PLogin from './pages/PLogin/PLogin'
 import PListagemAlunos from './pages/PListagem/PListagemAlunos/PListagemAlunos'
 import PListagemLivros from './pages/PListagem/PListagemLivros/PListagemLivros'
 import PListagemEmprestimo from './pages/PListagem/PListagemEmprestimo/PListagemEmprestimo'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 
 function App() {
 
@@ -13,9 +14,9 @@ function App() {
       <Routes>
         <Route path='/' element={<PHome />} /> 
         <Route path='/login' element={<PLogin />} />
-        <Route path='/lista/aluno' element={<PListagemAlunos />} />
-        <Route path='/lista/livro' element={<PListagemLivros />} />
-        <Route path='/lista/emprestimo' element={<PListagemEmprestimo />} />
+        <Route path='/lista/aluno' element={<ProtectedRoute element={<PListagemAlunos />} />} />
+        <Route path='/lista/livro' element={<ProtectedRoute element={<PListagemLivros />} />} />
+        <Route path='/lista/emprestimo' element={<ProtectedRoute element={<PListagemEmprestimo />} />} />
       </Routes>
     </BrowserRouter>
   )
