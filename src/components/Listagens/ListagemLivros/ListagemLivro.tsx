@@ -21,6 +21,7 @@ function ListagemLivros(): JSX.Element {
         buscarLivros();
     }, []);
 
+    // Lógica de Paginação
     const totalPages = Math.ceil(livros.length / rowsPerPage);
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;

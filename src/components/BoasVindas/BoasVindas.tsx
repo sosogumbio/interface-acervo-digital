@@ -16,5 +16,4 @@ function BoasVindas(): JSX.Element {
     );
 }
 
-
 export default BoasVindas;

@@ -3,14 +3,14 @@ import Navegacao from "../../../components/Navegacao/Navegacao";
 import ListagemLivros from "../../../components/Listagens/ListagemLivros/ListagemLivro";
 import Rodape from "../../../components/Rodape/Rodape";
 
-function PListagemLivros(): JSX.Element {
+function PListagemLivro(): JSX.Element {
     return (
-        <>
+        <div className="min-h-screen flex flex-col">
             <Navegacao />
             <ListagemLivros />
             <Rodape />
-        </>
+        </div>
     );
 }
 
-export default PListagemLivros;
+export default PListagemLivro;

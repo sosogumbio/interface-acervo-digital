@@ -1,15 +1,15 @@
 import { type JSX } from "react";
 import Navegacao from "../../../components/Navegacao/Navegacao";
-import ListagemEmprestimo from "../../../components/Listagens/ListagemEmprestimo/ListagemEmprestimo";
+import ListagemEmprestimos from "../../../components/Listagens/ListagemEmprestimo/ListagemEmprestimo";
 import Rodape from "../../../components/Rodape/Rodape";
 
 function PListagemEmprestimo(): JSX.Element {
     return (
-        <>
+        <div className="min-h-screen flex flex-col">
             <Navegacao />
-            <ListagemEmprestimo />
+            <ListagemEmprestimos />
             <Rodape />
-        </>
+        </div>
     );
 }
 

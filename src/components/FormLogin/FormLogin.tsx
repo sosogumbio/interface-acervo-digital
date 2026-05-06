@@ -1,7 +1,7 @@
 // Importa o tipo JSX do React para definir o tipo de retorno do componente
 import { type JSX, useState } from 'react';// Importa os estilos CSS específicos para o formulário de login
 import estilo from './FormLogin.module.css';
-import AuthRequests from '../../../fetch/AuthRequests';
+import AuthRequests from '../../fetch/AuthRequests';
 
 // Declara o componente funcional LoginForm que retorna um elemento JSX
 function LoginForm(): JSX.Element {
@@ -84,4 +84,5 @@ function LoginForm(): JSX.Element {
     );
 }
 
+// Exporta o componente para ser utilizado em outros arquivos do projeto
 export default LoginForm;

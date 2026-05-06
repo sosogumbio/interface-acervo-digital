@@ -6,6 +6,6 @@ export default interface AlunoDTO {
     data_nascimento: Date,
     endereco: string,
     email: string,
-    celular?: string,
+    celular?: string
     status_aluno?: boolean
 }
