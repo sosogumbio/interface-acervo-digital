@@ -1,5 +1,6 @@
-// Classe responsável por fazer requisições à API - aluno
 import type AlunoDTO from "../dto/AlunoDTO";
+
+// Classe responsável por fazer requisições à API - aluno
 class AlunoRequests {
     private serverURL;
     private endpointAluno;
@@ -20,7 +21,7 @@ class AlunoRequests {
                 }
             });
 
-            if(respostaAPI.ok) {
+            if (respostaAPI.ok) {
                 const listaDeAlunos = await respostaAPI.json();
                 return listaDeAlunos;
             } else {
@@ -29,10 +30,8 @@ class AlunoRequests {
         } catch (error) {
             console.error(`Erro ao fazer a consulta de alunos. ${error}`);
             return;
-
         }
     }
-    
     async obterAlunoPorId(id_aluno: number): Promise<AlunoDTO | undefined> {
         try {
             const token = localStorage.getItem('token');
@@ -54,7 +53,6 @@ class AlunoRequests {
             return;
         }
     }
-    
 }
 
 export default new AlunoRequests;

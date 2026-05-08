@@ -83,4 +83,8 @@
   .login-header {
     font-size: 1.25rem;
   }
-}
+
+
+.container {
+    width: 1200px;
+}}
