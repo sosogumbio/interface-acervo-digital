@@ -2,6 +2,7 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import PHome from './pages/PHome/PHome'
 import PLogin from './pages/PLogin/PLogin'
+<<<<<<< HEAD
 import PListagemAluno from './pages/PListagem/PLIstagemAluno/PListagemAluno'
 import PListagemEmprestimo from './pages/PListagem/PListagemEmprestimo/PListagemEmprestimo'
 import PListagemLivro from './pages/PListagem/PListagemLivro/PListagemLivro'
@@ -9,6 +10,14 @@ import PDetalhesAluno from './pages/PDetalhes/PDetalhesAlunos/PDetalhesAluno'
 import PDetalhesLivro from './pages/PDetalhes/PDetalhesLivros/PDetalhesLivro'
 import PDetalhesEmprestimo from './pages/PDetalhes/PDetalhesEmprestimos/PDetalhesEmprestimo'
 // import ProtectedRoute from './components/Rotas/ProtectedRoutes'
+=======
+import PListagemAluno from './pages/PListagem/PListagemAlunos/PListagemAlunos'
+import PListagemEmprestimo from './pages/PListagem/PListagemEmprestimo/PListagemEmprestimo'
+import PListagemLivro from './pages/PListagem/PListagemLivros/PListagemLivros'
+import PDetalhesAluno from './pages/PDetalhes/PDetalhesAluno/PDetalhesAluno'
+import PDetalhesLivro from './pages/PDetalhes/PDetalhesLivro/PDetalhesLivro'
+import PDetalhesEmprestimo from './pages/PDetalhes/PDetalhesEmprestimo/PDetalhesEmprestimo'
+>>>>>>> features
 
 function App() {
 
@@ -28,4 +37,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

@@ -33,11 +33,9 @@ class AlunoRequests {
             return;
         }
     }
-
     async obterAlunoPorId(id_aluno: number): Promise<AlunoDTO | undefined> {
         try {
             const token = localStorage.getItem('token');
-
             const respostaAPI = await fetch(`${this.serverURL}${this.endpointAluno}/${id_aluno}`, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,4 +56,4 @@ class AlunoRequests {
     }
 }
 
-export default new AlunoRequests();
+export default new AlunoRequests;

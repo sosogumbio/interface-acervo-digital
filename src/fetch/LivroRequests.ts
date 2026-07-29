@@ -33,11 +33,9 @@ class LivroRequests {
             return;
         }
     }
-
     async obterLivroPorId(id_livro: number): Promise<LivroDTO | undefined> {
         try {
             const token = localStorage.getItem('token');
-
             const respostaAPI = await fetch(`${this.serverUrl}${this.endpointLivro}/${id_livro}`, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,4 +56,4 @@ class LivroRequests {
     }
 }
 
-export default new LivroRequests();
+export default new LivroRequests;

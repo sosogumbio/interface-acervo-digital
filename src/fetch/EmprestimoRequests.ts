@@ -1,22 +1,19 @@
-// Classe responsável por fazer requisições à API - livro
-import type LivroDTO from "../dto/LivroDTO";
-const API_URL  = import.meta.env.VITE_API_SERVER_URL;
-
-
-class LivroRequests {
-    private serverUrl;
-    private endpointLivro;
+import type EmprestimoDTO from "../dto/EmprestimoDTO";
+const API_URL = import.meta.env.VITE_API_SERVER_URL;
+class EmprestimoRequests {
+    private serverURL;
+    private endpointEmprestimo;
 
     constructor() {
-        this.serverUrl = API_URL;
-        this.endpointLivro = '/api/livros';
+        this.serverURL = API_URL;
+        this.endpointEmprestimo = '/api/emprestimos';
     }
 
-    async obterListaDeLivros() {
+    async obterListaDeEmprestimos() {
         try {
             const token = localStorage.getItem('token');
 
-            const respostaAPI = await fetch(`${this.serverUrl}${this.endpointLivro}`, {
+            const respostaAPI = await fetch(`${this.serverURL}${this.endpointEmprestimo}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'x-access-token': `${token}`
@@ -24,22 +21,21 @@ class LivroRequests {
             });
 
             if (respostaAPI.ok) {
-                const listaDeLivros = await respostaAPI.json();
-                return listaDeLivros;
+                const listaDeEmprestimos = await respostaAPI.json();
+                return listaDeEmprestimos;
             } else {
-                throw new Error(`Não foi possível listar os livros.`);
+                throw new Error("Não foi possível listar os empréstimos.");
             }
         } catch (error) {
-            console.error(`Erro ao fazer a consulta de livros. ${error}`);
+            console.error(`Erro ao fazer a consulta de empréstimos. ${error}`);
             return;
         }
     }
 
-    async obterLivroPorId(id_livro: number): Promise<LivroDTO | undefined> {
+    async obterEmprestimoPorId(id_emprestimo: number): Promise<EmprestimoDTO | undefined> {
         try {
             const token = localStorage.getItem('token');
-
-            const respostaAPI = await fetch(`${this.serverUrl}${this.endpointLivro}/${id_livro}`, {
+            const respostaAPI = await fetch(`${this.serverURL}${this.endpointEmprestimo}/${id_emprestimo}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'x-access-token': `${token}`
@@ -47,16 +43,39 @@ class LivroRequests {
             });
 
             if (respostaAPI.ok) {
-                const livro: LivroDTO = await respostaAPI.json();
-                return livro;
+                const emprestimo: EmprestimoDTO = await respostaAPI.json();
+                return emprestimo;
             } else {
-                throw new Error("Não foi possível buscar o livro.");
+                throw new Error("Não foi possível buscar o empréstimo.");
             }
         } catch (error) {
-            console.error(`Erro ao fazer a consulta de livro por ID. ${error}`);
+            console.error(`Erro ao fazer a consulta de empréstimo por ID. ${error}`);
             return;
         }
     }
+    async enviarFormularioEmprestimo(formEmprestimo: EmprestimoDTO): Promise<boolean> {
+        try {
+            const token = localStorage.getItem('token');
+            const respostaAPI = await fetch(`${this.serverURL}${this.endpointEmprestimo}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': `${token}`
+                },
+                body: JSON.stringify(formEmprestimo)
+            });
+
+            if (!respostaAPI.ok) throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+
+            console.info(`${respostaAPI.status}: ${respostaAPI.statusText}`);
+
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer consulta à API. ${error}`);
+            return false;
+        }
+    }
+    
 }
 
-export default new LivroRequests();
+export default new EmprestimoRequests;
