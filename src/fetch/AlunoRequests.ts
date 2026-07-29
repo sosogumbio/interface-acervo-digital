@@ -7,7 +7,7 @@ class AlunoRequests {
     private endpointAluno;
 
     constructor() {
-        this.serverURL = 'http://localhost:3333';
+        this.serverURL = API_URL;
         this.endpointAluno = '/api/alunos';
     }
 

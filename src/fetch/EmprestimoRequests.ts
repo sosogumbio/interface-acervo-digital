@@ -8,7 +8,7 @@ class LivroRequests {
     private endpointLivro;
 
     constructor() {
-        this.serverUrl = 'http://localhost:3333/';
+        this.serverUrl = API_URL;
         this.endpointLivro = '/api/livros';
     }
 
